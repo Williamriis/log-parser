@@ -6,45 +6,50 @@ import { errorHandler, countUniqueItems, getMostCommon, getDirectoryName, getFil
 
 const DIRECTORY_NAME = config.DIRECTORY_NAME
 
-const getFileStatistics = (filesToCheck, directoryName) => {
-
+const parseFile = (file, directoryName) => {
     return new Promise((res, rej) => {
         try {
-            filesToCheck.forEach((fileName) => {
-                const ips = []
-                const urls = []
-                const rd = readline.createInterface({
-                    input: fs.createReadStream(directoryName + fileName),
-                    output: process.stdout,
-                    terminal: false
-                })
-                rd.on('line', ((line) => {
-                    const ip = line.match(config.IP_REGEXP)
-                    if (ip && ip.length > 0) {
-                        ips.push(ip[0])
-                    }
-                    const url = line.substring(
-                        line.indexOf("GET") + 3,
-                        line.lastIndexOf("HTTP")
-                    );
-                    urls.push(url)
-                }))
-                rd.on('close', (() => {
-                    res({
-                        fileName,
-                        uniqueIps: countUniqueItems(ips),
-                        mostActiveIpd: getMostCommon(ips),
-                        mostVisitedUrl: getMostCommon(urls)
-                    })
-                }))
+            const ips = []
+            const urls = []
+            const rd = readline.createInterface({
+                input: fs.createReadStream(directoryName + file),
+                output: process.stdout,
+                terminal: false
             })
+            rd.on('line', ((line) => {
+                const ip = line.match(config.IP_REGEXP)
+                if (ip && ip.length > 0) {
+                    ips.push(ip[0])
+                }
+                const url = line.substring(
+                    line.indexOf("GET") + 3,
+                    line.lastIndexOf("HTTP")
+                );
+                urls.push(url)
+            }))
+            rd.on('close', (() => {
+                res({
+                    file,
+                    uniqueIps: countUniqueItems(ips),
+                    mostActiveIpd: getMostCommon(ips),
+                    mostVisitedUrl: getMostCommon(urls)
+                })
+            }))
         } catch (err) {
             rej(err)
         }
     })
 }
 
-const execute = async (dirName = DIRECTORY_NAME) => {
+const getFileStatistics = async (filesToCheck, directoryName) => {
+    const statistics = []
+    for await (const file of filesToCheck) {
+        statistics.push(await parseFile(file, directoryName))
+    }
+    return statistics
+}
+
+const main = async (dirName = DIRECTORY_NAME) => {
     const directoryName = getDirectoryName(dirName)
     try {
         const fileNames = getFilteredFileNames(fs.readdirSync(directoryName))
@@ -55,4 +60,4 @@ const execute = async (dirName = DIRECTORY_NAME) => {
     }
 }
 
-execute()
+main()
