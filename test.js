@@ -4,7 +4,8 @@ import * as readline from 'readline';
 import config from './config.js'
 import { errorHandler, countUniqueItems, getMostCommon, getDirectoryName, getFilteredFileNames } from './utils.js'
 
-const DIRECTORY_NAME = config.DIRECTORY_NAME
+const DIRECTORY_NAME = process.env.DIRECTORY ? process.env.DIRECTORY : config.DIRECTORY_NAME
+const PARSE_HIDDEN = process.env.PARSE_HIDDEN
 
 const parseFile = (file, directoryName) => {
     return new Promise((res, rej) => {
@@ -49,10 +50,10 @@ const getFileStatistics = async (filesToCheck, directoryName) => {
     return statistics
 }
 
-const main = async (dirName = DIRECTORY_NAME) => {
-    const directoryName = getDirectoryName(dirName)
+const main = async () => {
+    const directoryName = getDirectoryName(DIRECTORY_NAME)
     try {
-        const fileNames = getFilteredFileNames(fs.readdirSync(directoryName))
+        const fileNames = getFilteredFileNames(fs.readdirSync(directoryName), PARSE_HIDDEN)
         const statistics = await getFileStatistics(fileNames, directoryName)
         console.log("STATISTICS:", statistics)
     } catch (err) {

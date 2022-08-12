@@ -1,5 +1,5 @@
 export const errorHandler = (error) => {
-    console.log(error)
+    console.log('Error parsing log: ', error)
 }
 
 export const countUniqueItems = (iterable) => {
@@ -29,6 +29,6 @@ export const getDirectoryName = (dirName) => {
     }
 }
 
-export const getFilteredFileNames = (nameArray, filterHidden = true) => {
-    return !filterHidden ? nameArray : nameArray.filter(name => !name.startsWith('.'))
+export const getFilteredFileNames = (nameArray, parseHidden = false) => {
+    return parseHidden ? nameArray : nameArray.filter(name => !name.startsWith('.'))
 }
