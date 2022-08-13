@@ -50,12 +50,13 @@ const getFileStatistics = async (filesToCheck, directoryName) => {
     return statistics
 }
 
-const main = async () => {
-    const directoryName = getDirectoryName(DIRECTORY_NAME)
+export const main = async (dirName = DIRECTORY_NAME) => {
+    const directoryName = getDirectoryName(dirName)
     try {
         const fileNames = getFilteredFileNames(fs.readdirSync(directoryName), PARSE_HIDDEN)
         const statistics = await getFileStatistics(fileNames, directoryName)
-        console.log("STATISTICS:", statistics)
+        console.log(statistics)
+        return statistics
     } catch (err) {
         errorHandler(err)
     }

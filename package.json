@@ -3,6 +3,12 @@
     "name": "log-parser",
     "version": "1.0.0",
     "scripts": {
-        "test": "node --experimental-modules main.js"
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    },
+    "jest": {
+        "transform": {}
+    },
+    "dependencies": {
+        "jest": "^28.1.3"
     }
 }
