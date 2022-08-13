@@ -1,3 +1,8 @@
 {
-    "type": "module"
+    "type": "module",
+    "name": "log-parser",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "node --experimental-modules main.js"
+    }
 }
