@@ -23,8 +23,8 @@ const parseFile = (file, directoryName) => {
                     ips.push(ip[0])
                 }
                 const url = line.substring(
-                    line.indexOf("GET") + 3,
-                    line.lastIndexOf("HTTP")
+                    line.indexOf("GET") + 4,
+                    line.lastIndexOf(" HTTP")
                 );
                 urls.push(url)
             }))

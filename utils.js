@@ -1,3 +1,5 @@
+import config from './config.js'
+
 export const errorHandler = (error) => {
     console.log('Error parsing log: ', error)
 }
@@ -15,7 +17,7 @@ export const getMostCommon = (arr) => {
 
 export const getDirectoryName = (dirName) => {
     if (!dirName || typeof dirName !== 'string') {
-        return 'logs/'
+        return config.DIRECTORY_NAME + '/'
     }
 
     try {
@@ -25,7 +27,7 @@ export const getDirectoryName = (dirName) => {
             return dirName + '/'
         }
     } catch (err) {
-        return DIRECTORY_NAME + '/'
+        return config.DIRECTORY_NAME + '/'
     }
 }
 
