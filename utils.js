@@ -9,6 +9,8 @@ export const countUniqueItems = (iterable) => {
 }
 
 export const getMostCommon = (arr) => {
+    /** This method will NOT take account of draws. */
+
     return arr.sort((a, b) =>
         arr.filter(v => v === a).length
         - arr.filter(v => v === b).length
