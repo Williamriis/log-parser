@@ -1,4 +1,5 @@
 import { main } from '../main.js'
+import config from '../config.js'
 
 const testOneMockData = [{ "file": "testlog.log", "mostActiveIpd": "168.41.191.40", "mostVisitedUrl": "http://example.net/faq/", "uniqueIps": 3 }]
 const testTwoMockData = [
@@ -11,7 +12,7 @@ const testTwoMockData = [
 ]
 
 test('Read log from testlogs map', async () => {
-    const data = await main('testlogs')
+    const data = await main(config.TEST_DIRECTORY_NAME)
     expect(data).toEqual(testOneMockData)
 })
 
