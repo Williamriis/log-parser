@@ -1,8 +1,8 @@
-## Log parser
+# Log parser
 
 A javascript application for parsing all the log files in a given directory and returning certain pieces of data on each.
 
-# Getting started:
+## Getting started:
 
 1. Clone the github repo and then navigate to it inside the terminal.
 2. Run 'npm install' to install the required node modules.
@@ -24,7 +24,7 @@ DIRECTORY=<path/to/log> npm start
 PARSE_HIDDEN=true npm start
 ```
 
-# Troubleshooting
+## Troubleshooting
 
 If you are running a version of node lower than 14 you will need to add an additional flag in order to run the parser:
 
